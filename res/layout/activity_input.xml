@@ -19,7 +19,7 @@
         android:layout_below="@+id/GroceryInstr"
         android:layout_marginTop="15dp"
         android:ems="10"
-        android:hint="Add some groceries"
+        android:hint="Add some groceries. Click on item to remove"
         android:textColor = "#ff9900"/>
    <ListView
         android:id="@+id/listView"

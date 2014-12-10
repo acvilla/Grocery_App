@@ -2,33 +2,46 @@ package com.example.realgroceryapp;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
+import android.app.LauncherActivity.ListItem;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-public class InputActivity extends ActionBarActivity {
+public class InputActivity extends ActionBarActivity implements OnItemClickListener {
 	public final static String message = "com.example.realgroceryapp.MESSAGE";
 	public static final String PREFS_NAME = "MyPrefsFile";//used to save
 	private Button bt;
 	private EditText et;
 	private ListView lv;
+	
 	public static ArrayList<String> strArr;
 	public static ArrayAdapter<String> adapter;
+
 	
-	
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		// TODO Auto-generated method stub
+		 strArr.remove(position);
+		 adapter.notifyDataSetChanged();
+		 adapter = new ArrayAdapter<String>(getApplicationContext(),
+					android.R.layout.simple_list_item_1, strArr);
+			lv.setAdapter(adapter);
+	}
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +51,14 @@ public class InputActivity extends ActionBarActivity {
 		lv.setFocusable(true);
 	    lv.setFocusableInTouchMode(true);///add this line
 	    lv.requestFocus();
+	    lv.setOnItemClickListener(this);
 		et = (EditText) findViewById(R.id.etItem);
 		bt = (Button) findViewById(R.id.btEnter);
 		strArr = new ArrayList<String>();
 		adapter = new ArrayAdapter<String>(getApplicationContext(),
 				android.R.layout.simple_list_item_1, strArr);
 		lv.setAdapter(adapter);
+		
 		String newString;
 		if (savedInstanceState == null) {
 		    Bundle extras = getIntent().getExtras();
@@ -68,19 +83,7 @@ public class InputActivity extends ActionBarActivity {
 		});
 	}
 	
-	@Override
-	public void onRestoreInstanceState(Bundle savedInstanceState){
-		super.onRestoreInstanceState(savedInstanceState);
-			strArr = savedInstanceState.getStringArrayList("saved_string");
-	}
 	
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState){
-		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putStringArrayList("saved_string", strArr);
-	}
-	
-
 	public void onSearchClick(View v){
 		Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
 		String listString = "";

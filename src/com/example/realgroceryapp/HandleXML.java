@@ -24,6 +24,7 @@ import android.widget.Toast;
 public class HandleXML {
 
    private String food = " ";
+   private String description = " ";
    private String urlString = null;
    private XmlPullParserFactory xmlFactoryObject;
    public volatile boolean parsingComplete = true;
@@ -32,6 +33,9 @@ public class HandleXML {
    }
    public String getFood(){
       return food;
+   }
+   public String getDescription(){
+	   return description;
    }
 
    public void parseXMLAndStoreIt(XmlPullParser myParser) {
@@ -50,6 +54,9 @@ public class HandleXML {
                case XmlPullParser.END_TAG:
                   if(name.equals("itemname")){
                      food = text;
+                  }
+                  else if(name.equals("description")){
+                	 description = myParser.getText();
                   }
                   else{
                   }

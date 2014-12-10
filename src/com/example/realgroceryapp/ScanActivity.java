@@ -48,6 +48,11 @@ public class ScanActivity extends ActionBarActivity implements OnClickListener{
 			{
 				item_name = obj.getFood();
 			}
+			if (item_name == " "){
+				while(obj.parsingComplete){
+					item_name=obj.getDescription();
+				}
+			}
 			formatTxt.setText("FORMAT: " + scanFormat);
 			contentTxt.setText("CONTENT: " + scanContent);
 			Intent i = new Intent(ScanActivity.this, InputActivity.class);
